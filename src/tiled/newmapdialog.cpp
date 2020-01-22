@@ -28,6 +28,8 @@
 #include "orthogonalrenderer.h"
 #include "preferences.h"
 #include "staggeredrenderer.h"
+#include "renderlayer.h"
+#include "objectgroup.h"
 #include "tilelayer.h"
 #include "utils.h"
 
@@ -172,9 +174,8 @@ MapDocumentPtr NewMapDialog::createMap()
 
     // Add a tile layer to new maps of reasonable size
     if (memory < gigabyte) {
-        map->addLayer(new TileLayer(QCoreApplication::translate("Tiled::MapDocument", "Tile Layer %1").arg(1),
-                                    0, 0,
-                                    mapWidth, mapHeight));
+        map->addLayer(new RenderLayer(QCoreApplication::translate("Tiled::MapDocument", "Render Layer %1").arg(1)));
+        map->addLayer(new ObjectGroup(QCoreApplication::translate("Tiled::MapDocument", "Object Layer %1").arg(1)));
     } else {
         const double gigabytes = static_cast<double>(memory) / gigabyte;
         QMessageBox::warning(this, tr("Memory Usage Warning"),

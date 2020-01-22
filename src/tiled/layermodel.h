@@ -103,6 +103,7 @@ private:
 
     QIcon mTileLayerIcon;
     QIcon mObjectGroupIcon;
+    QIcon mRenderLayerIcon;
     QIcon mImageLayerIcon;
 };
 

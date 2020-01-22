@@ -66,6 +66,7 @@ public:
 
     QAction *actionAddTileLayer() const { return mActionAddTileLayer; }
     QAction *actionAddObjectGroup() const { return mActionAddObjectGroup; }
+    QAction *actionAddRenderLayer() const { return mActionAddRenderLayer; }
     QAction *actionAddImageLayer() const { return mActionAddImageLayer; }
     QAction *actionAddGroupLayer() const { return mActionAddGroupLayer; }
     QAction *actionLayerViaCopy() const { return mActionLayerViaCopy; }
@@ -108,6 +109,7 @@ public slots:
 
     void addTileLayer();
     void addObjectGroup();
+    void addRenderLayer();
     void addImageLayer();
     void addGroupLayer();
     void layerViaCopy() { layerVia(ViaCopy); }
@@ -148,6 +150,7 @@ private:
 
     QAction *mActionAddTileLayer;
     QAction *mActionAddObjectGroup;
+    QAction *mActionAddRenderLayer;
     QAction *mActionAddImageLayer;
     QAction *mActionAddGroupLayer;
     QAction *mActionLayerViaCopy;

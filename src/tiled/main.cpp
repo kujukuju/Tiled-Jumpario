@@ -374,8 +374,8 @@ int main(int argc, char *argv[])
     languageManager->installTranslators();
 
     // Add the built-in file formats
-    TmxMapFormat tmxMapFormat;
-    PluginManager::addObject(&tmxMapFormat);
+    // TmxMapFormat tmxMapFormat;
+    //PluginManager::addObject(&tmxMapFormat);
 
     TsxTilesetFormat tsxTilesetFormat;
     PluginManager::addObject(&tsxTilesetFormat);

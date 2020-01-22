@@ -46,6 +46,7 @@
 #include "movemapobject.h"
 #include "movemapobjecttogroup.h"
 #include "objectgroup.h"
+#include "renderlayer.h"
 #include "offsetlayer.h"
 #include "orthogonalrenderer.h"
 #include "painttilelayer.h"
@@ -469,7 +470,11 @@ void MapDocument::rotateSelectedObjects(RotateDirection direction)
  * Adds a layer of the given type to the top of the layer stack. After adding
  * the new layer, emits editLayerNameRequested().
  */
-Layer *MapDocument::addLayer(Layer::TypeFlag layerType)
+Layer *MapDocument::addLayer(Layer::TypeFlag layerType) {
+    addLayer(layerType, false);
+}
+
+Layer *MapDocument::addLayer(Layer::TypeFlag layerType, bool isRenderLayer)
 {
     Layer *layer = nullptr;
     QString name;
@@ -480,6 +485,11 @@ Layer *MapDocument::addLayer(Layer::TypeFlag layerType)
         layer = new TileLayer(name, 0, 0, mMap->width(), mMap->height());
         break;
     case Layer::ObjectGroupType:
+        if (isRenderLayer) {
+            name = tr("Render Layer %1").arg(mMap->objectGroupCount() + 1);
+            layer = new RenderLayer(name, 0, 0);
+            break;
+        }
         name = tr("Object Layer %1").arg(mMap->objectGroupCount() + 1);
         layer = new ObjectGroup(name, 0, 0);
         break;

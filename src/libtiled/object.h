@@ -70,7 +70,9 @@ public:
     /**
      * Returns the properties of this object.
      */
-    const Properties &properties() const { return mProperties; }
+    const Properties &properties() const {
+        return mProperties;
+    }
 
     /**
      * Replaces all existing properties with a new set of properties.

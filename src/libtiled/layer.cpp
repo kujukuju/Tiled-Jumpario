@@ -46,10 +46,16 @@ static QColor multiplyColors(QColor color1, QColor color2)
 }
 
 Layer::Layer(TypeFlag type, const QString &name, int x, int y) :
+    Layer(type, false, name, x, y)
+{
+}
+
+Layer::Layer(TypeFlag type, bool isRenderLayer, const QString &name, int x, int y) :
     Object(LayerType),
     mName(name),
     mId(0),
     mLayerType(type),
+    mIsRenderLayer(isRenderLayer),
     mX(x),
     mY(y),
     mOpacity(1.0),

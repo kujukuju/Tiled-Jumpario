@@ -43,10 +43,12 @@ LayerModel::LayerModel(QObject *parent):
     mMap(nullptr),
     mTileLayerIcon(QLatin1String(":/images/16/layer-tile.png")),
     mObjectGroupIcon(QLatin1String(":/images/16/layer-object.png")),
+    mRenderLayerIcon(QLatin1String(":/images/16/render-layer.png")),
     mImageLayerIcon(QLatin1String(":/images/16/layer-image.png"))
 {
     mTileLayerIcon.addFile(QLatin1String(":images/32/layer-tile.png"));
     mObjectGroupIcon.addFile(QLatin1String(":images/32/layer-object.png"));
+    mRenderLayerIcon.addFile(QLatin1String(":images/32/render-layer.png"));
 }
 
 QModelIndex LayerModel::index(int row, int column, const QModelIndex &parent) const
@@ -120,6 +122,9 @@ QVariant LayerModel::data(const QModelIndex &index, int role) const
             case Layer::TileLayerType:
                 return mTileLayerIcon;
             case Layer::ObjectGroupType:
+                if (layer->isRenderLayer()) {
+                    return mRenderLayerIcon;
+                }
                 return mObjectGroupIcon;
             case Layer::ImageLayerType:
                 return mImageLayerIcon;

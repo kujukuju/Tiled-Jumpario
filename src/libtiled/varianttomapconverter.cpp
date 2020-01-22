@@ -36,6 +36,7 @@
 #include "wangset.h"
 
 #include <memory>
+#include <iostream>
 
 namespace Tiled {
 
@@ -321,6 +322,12 @@ SharedTileset VariantToMapConverter::toTileset(const QVariant &variant)
                     objectGroup->setProperties(Properties());
                 }
 
+//                if (objectGroup->properties().contains(QLatin1String("render"))) {
+//                    std::cout << "READ 2" << std::endl;
+//                    objectGroup->setIsRenderLayer(true);
+//                    objectGroup->removeProperty(QLatin1String("render"));
+//                }
+
                 tile->setObjectGroup(std::move(objectGroup));
             }
         }
@@ -571,6 +578,7 @@ std::unique_ptr<TileLayer> VariantToMapConverter::toTileLayer(const QVariantMap 
 
 std::unique_ptr<ObjectGroup> VariantToMapConverter::toObjectGroup(const QVariantMap &variantMap)
 {
+    std::cout << "READ 1" << std::endl;
     typedef std::unique_ptr<ObjectGroup> ObjectGroupPtr;
     ObjectGroupPtr objectGroup(new ObjectGroup(variantMap[QLatin1String("name")].toString(),
                                                variantMap[QLatin1String("x")].toInt(),

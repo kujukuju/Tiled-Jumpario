@@ -33,13 +33,14 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTextStream>
+#include <iostream>
 
 namespace Json {
 
 void JsonPlugin::initialize()
 {
     addObject(new JsonMapFormat(JsonMapFormat::Json, this));
-    addObject(new JsonMapFormat(JsonMapFormat::JavaScript, this));
+    // addObject(new JsonMapFormat(JsonMapFormat::JavaScript, this));
     addObject(new JsonTilesetFormat(this));
     addObject(new JsonObjectTemplateFormat(this));
 }
@@ -267,6 +268,7 @@ bool JsonTilesetFormat::write(const Tiled::Tileset &tileset,
                               const QString &fileName,
                               Options options)
 {
+    std::cout << "WRITING" << std::endl;
     Tiled::SaveFile file(fileName);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {

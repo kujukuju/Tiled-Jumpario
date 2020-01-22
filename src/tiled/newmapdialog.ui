@@ -19,6 +19,9 @@
    </property>
    <item row="0" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>Map</string>
      </property>
@@ -54,7 +57,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="layerFormat"/>
+       <widget class="QComboBox" name="layerFormat">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="renderOrderLabel">
@@ -74,6 +81,9 @@
    </item>
    <item row="1" column="0">
     <widget class="QGroupBox" name="groupBox_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>Map size</string>
      </property>
@@ -84,7 +94,7 @@
          <string>Fixed</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -171,6 +181,9 @@
        <widget class="QRadioButton" name="mapInfinite">
         <property name="text">
          <string>Infinite</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

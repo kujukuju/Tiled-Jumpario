@@ -76,6 +76,11 @@ public:
     Layer(TypeFlag type, const QString &name, int x, int y);
 
     /**
+     * Constructor.
+     */
+    Layer(TypeFlag type, bool isRenderLayer, const QString &name, int x, int y);
+
+    /**
      * The layer ID can be used to unique identify this layer of the map. It
      * stays the same regardless of whether the layer is moved or renamed.
      */
@@ -100,6 +105,8 @@ public:
      * Sets the name of this layer.
      */
     void setName(const QString &name) { mName = name; }
+
+    void setIsRenderLayer(bool isRenderLayer) { mIsRenderLayer = isRenderLayer; }
 
     /**
      * Returns the opacity of this layer.
@@ -241,6 +248,7 @@ public:
     // given subclass without relying on a dynamic_cast.
     bool isTileLayer() const { return mLayerType == TileLayerType; }
     bool isObjectGroup() const { return mLayerType == ObjectGroupType; }
+    bool isRenderLayer() const { return mIsRenderLayer; }
     bool isImageLayer() const { return mLayerType == ImageLayerType; }
     bool isGroupLayer() const { return mLayerType == GroupLayerType; }
 
@@ -263,6 +271,7 @@ protected:
     QString mName;
     int mId;
     TypeFlag mLayerType;
+    bool mIsRenderLayer;
     int mX;
     int mY;
     QPointF mOffset;

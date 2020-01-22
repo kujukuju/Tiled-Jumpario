@@ -64,6 +64,7 @@ public:
 
     explicit ObjectGroup(const QString &name = QString());
     ObjectGroup(const QString &name, int x, int y);
+    ObjectGroup(const QString &name, bool isRenderLayer, int x, int y);
 
     ~ObjectGroup() override;
 

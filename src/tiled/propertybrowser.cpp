@@ -764,6 +764,24 @@ void PropertyBrowser::addObjectGroupProperties()
     addProperty(groupProperty);
 }
 
+void PropertyBrowser::addRenderLayerProperties()
+{
+    QtProperty *groupProperty = mGroupManager->addProperty(tr("Render Layer"));
+    addLayerProperties(groupProperty);
+
+    addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty);
+
+    QtVariantProperty *drawOrderProperty =
+            addProperty(DrawOrderProperty,
+                        QtVariantPropertyManager::enumTypeId(),
+                        tr("Drawing Order"),
+                        groupProperty);
+
+    drawOrderProperty->setAttribute(QLatin1String("enumNames"), mDrawOrderNames);
+
+    addProperty(groupProperty);
+}
+
 void PropertyBrowser::addImageLayerProperties()
 {
     QtProperty *groupProperty = mGroupManager->addProperty(tr("Image Layer"));
@@ -1571,7 +1589,14 @@ void PropertyBrowser::addProperties()
     case Object::LayerType:
         switch (static_cast<Layer*>(mObject)->layerType()) {
         case Layer::TileLayerType:      addTileLayerProperties();   break;
-        case Layer::ObjectGroupType:    addObjectGroupProperties(); break;
+        case Layer::ObjectGroupType: {
+            if (static_cast<Layer*>(mObject)->isRenderLayer()) {
+                addRenderLayerProperties();
+                break;
+            }
+            addObjectGroupProperties();
+            break;
+        };
         case Layer::ImageLayerType:     addImageLayerProperties();  break;
         case Layer::GroupLayerType:     addGroupLayerProperties();  break;
         }

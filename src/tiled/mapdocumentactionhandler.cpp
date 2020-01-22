@@ -74,15 +74,19 @@ MapDocumentActionHandler::MapDocumentActionHandler(QObject *parent)
 
     QIcon addTileLayerIcon(QLatin1String(":/images/16/layer-tile.png"));
     QIcon addObjectLayerIcon(QLatin1String(":/images/16/layer-object.png"));
+    QIcon addRenderLayerIcon(QLatin1String(":/images/16/render-layer.png"));
     QIcon addImageLayerIcon(QLatin1String(":/images/16/layer-image.png"));
 
     addTileLayerIcon.addFile(QLatin1String(":/images/32/layer-tile.png"));
     addObjectLayerIcon.addFile(QLatin1String(":/images/32/layer-object.png"));
+    addRenderLayerIcon.addFile(QLatin1String(":/images/32/render-layer.png"));
 
     mActionAddTileLayer = new QAction(this);
     mActionAddTileLayer->setIcon(addTileLayerIcon);
     mActionAddObjectGroup = new QAction(this);
     mActionAddObjectGroup->setIcon(addObjectLayerIcon);
+    mActionAddRenderLayer = new QAction(this);
+    mActionAddRenderLayer->setIcon(addRenderLayerIcon);
     mActionAddImageLayer = new QAction(this);
     mActionAddImageLayer->setIcon(addImageLayerIcon);
     mActionAddGroupLayer = new QAction(this);
@@ -174,6 +178,7 @@ MapDocumentActionHandler::MapDocumentActionHandler(QObject *parent)
     connect(mActionAutocrop, &QAction::triggered, this, &MapDocumentActionHandler::autocrop);
     connect(mActionAddTileLayer, &QAction::triggered, this, &MapDocumentActionHandler::addTileLayer);
     connect(mActionAddObjectGroup, &QAction::triggered, this, &MapDocumentActionHandler::addObjectGroup);
+    connect(mActionAddRenderLayer, &QAction::triggered, this, &MapDocumentActionHandler::addRenderLayer);
     connect(mActionAddImageLayer, &QAction::triggered, this, &MapDocumentActionHandler::addImageLayer);
     connect(mActionAddGroupLayer, &QAction::triggered, this, &MapDocumentActionHandler::addGroupLayer);
     connect(mActionLayerViaCopy, &QAction::triggered, this, &MapDocumentActionHandler::layerViaCopy);
@@ -204,6 +209,7 @@ MapDocumentActionHandler::MapDocumentActionHandler(QObject *parent)
     ActionManager::registerAction(mActionAutocrop, "Autocrop");
     ActionManager::registerAction(mActionAddTileLayer, "AddTileLayer");
     ActionManager::registerAction(mActionAddObjectGroup, "AddObjectLayer");
+    ActionManager::registerAction(mActionAddRenderLayer, "AddRenderLayer");
     ActionManager::registerAction(mActionAddImageLayer, "AddImageLayer");
     ActionManager::registerAction(mActionAddGroupLayer, "AddGroupLayer");
     ActionManager::registerAction(mActionLayerViaCopy, "LayerViaCopy");
@@ -246,6 +252,7 @@ void MapDocumentActionHandler::retranslateUi()
 
     mActionAddTileLayer->setText(tr("&Tile Layer"));
     mActionAddObjectGroup->setText(tr("&Object Layer"));
+    mActionAddRenderLayer->setText(tr("&Render Layer"));
     mActionAddImageLayer->setText(tr("&Image Layer"));
     mActionAddGroupLayer->setText(tr("&Group Layer"));
     mActionLayerViaCopy->setText(tr("Layer via Copy"));
@@ -306,10 +313,11 @@ QMenu *MapDocumentActionHandler::createNewLayerMenu(QWidget *parent) const
     newLayerMenu->setIcon(QIcon(QLatin1String(":/images/16/document-new.png")));
     Utils::setThemeIcon(newLayerMenu, "document-new");
 
-    newLayerMenu->addAction(actionAddTileLayer());
+    // newLayerMenu->addAction(actionAddTileLayer());
     newLayerMenu->addAction(actionAddObjectGroup());
+    newLayerMenu->addAction(actionAddRenderLayer());
     newLayerMenu->addAction(actionAddImageLayer());
-    newLayerMenu->addAction(actionAddGroupLayer());
+    // newLayerMenu->addAction(actionAddGroupLayer());
     newLayerMenu->addSeparator();
     newLayerMenu->addAction(actionLayerViaCopy());
     newLayerMenu->addAction(actionLayerViaCut());
@@ -560,6 +568,12 @@ void MapDocumentActionHandler::addObjectGroup()
         mMapDocument->addLayer(Layer::ObjectGroupType);
 }
 
+void MapDocumentActionHandler::addRenderLayer()
+{
+    if (mMapDocument)
+        mMapDocument->addLayer(Layer::ObjectGroupType, true);
+}
+
 void MapDocumentActionHandler::addImageLayer()
 {
      if (mMapDocument)
@@ -803,6 +817,7 @@ void MapDocumentActionHandler::updateActions()
 
     mActionAddTileLayer->setEnabled(map);
     mActionAddObjectGroup->setEnabled(map);
+    mActionAddRenderLayer->setEnabled(map);
     mActionAddImageLayer->setEnabled(map);
 
     bool usableSelection = currentLayer && ((currentLayer->isObjectGroup() && selectedObjectsCount > 0) ||

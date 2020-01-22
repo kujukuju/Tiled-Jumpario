@@ -160,6 +160,7 @@ public:
     void rotateSelectedObjects(RotateDirection direction);
 
     Layer *addLayer(Layer::TypeFlag layerType);
+    Layer *addLayer(Layer::TypeFlag layerType, bool isRenderLayer);
     void groupLayers(const QList<Layer *> &layers);
     void ungroupLayers(const QList<Layer *> &layers);
     void duplicateLayers(const QList<Layer *> &layers);

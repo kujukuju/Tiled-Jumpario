@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>553</width>
-     <height>31</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -329,6 +329,9 @@
    </property>
   </action>
   <action name="actionNewTileset">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New &amp;Tileset...</string>
    </property>
@@ -423,6 +426,9 @@
    </property>
   </action>
   <action name="actionAddExternalTileset">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Add External Tileset...</string>
    </property>

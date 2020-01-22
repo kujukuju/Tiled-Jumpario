@@ -153,6 +153,7 @@ private:
     void addLayerProperties(QtProperty *parent);
     void addTileLayerProperties();
     void addObjectGroupProperties();
+    void addRenderLayerProperties();
     void addImageLayerProperties();
     void addGroupLayerProperties();
     void addTilesetProperties();

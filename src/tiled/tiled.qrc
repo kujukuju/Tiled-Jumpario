@@ -167,5 +167,7 @@
         <file>images/scalable/highlight-current-layer-24.svg</file>
         <file>images/scalable/software-update-available-symbolic.svg</file>
         <file>images/scalable/wrap.svg</file>
+        <file>images/32/render-layer.png</file>
+        <file>images/16/render-layer.png</file>
     </qresource>
 </RCC>

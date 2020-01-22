@@ -703,7 +703,7 @@ bool DocumentManager::saveDocumentAs(Document *document)
         filter = helper.filter();
 
         auto suggestedFileName = QCoreApplication::translate("Tiled::MainWindow", "untitled");
-        suggestedFileName.append(QLatin1String(".tmx"));
+        suggestedFileName.append(QLatin1String(".json"));
 
         fileName = getSaveFileName(suggestedFileName);
         if (fileName.isEmpty())

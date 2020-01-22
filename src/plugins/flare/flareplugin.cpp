@@ -257,7 +257,11 @@ std::unique_ptr<Tiled::Map> FlarePlugin::read(const QString &fileName)
                     mapobject->setPosition(QPointF(x, y));
                     mapobject->setSize(w, h);
                 } else {
-                    mapobject->setProperty(key, value);
+                    if (key == "render") {
+                        objectgroup->setIsRenderLayer(true);
+                    } else {
+                        mapobject->setProperty(key, value);
+                    }
                 }
             }
         }
@@ -397,8 +401,17 @@ bool FlarePlugin::write(const Tiled::Map *map, const QString &fileName, Options 
                     // write all properties for this object
                     QVariantMap propsMap = o->properties();
                     for (QVariantMap::const_iterator it = propsMap.constBegin(); it != propsMap.constEnd(); ++it) {
+                        if (it.key() == "render") {
+                            continue;
+                        }
+
                         out << it.key() << "=" << toExportValue(it.value(), mapDir).toString() << "\n";
                     }
+
+                    if (layer->isRenderLayer()) {
+                        out << "render" << "=" << "true" << "\n";
+                    }
+
                     out << "\n";
                 }
             }
