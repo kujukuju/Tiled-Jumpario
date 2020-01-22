@@ -55,6 +55,7 @@ ObjectGroup::ObjectGroup(const QString &name, bool isRenderLayer, int x, int y)
     : Layer(ObjectGroupType, isRenderLayer, name, x, y)
     , mDrawOrder(TopDownOrder)
 {
+    setColor(QColor(0, 0, 0));
 }
 
 ObjectGroup::~ObjectGroup()

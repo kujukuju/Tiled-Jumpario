@@ -149,7 +149,7 @@ private:
     };
 
     void addMapProperties();
-    void addMapObjectProperties();
+    void addMapObjectProperties(ObjectGroup* objectGroupPtr);
     void addLayerProperties(QtProperty *parent);
     void addTileLayerProperties();
     void addObjectGroupProperties();
@@ -228,6 +228,8 @@ private:
     QStringList mRenderOrderNames;
     QStringList mFlippingFlagNames;
     QStringList mDrawOrderNames;
+    QStringList mTypeNamesObjectLayer;
+    QStringList mTypeNamesRenderLayer;
 };
 
 /**

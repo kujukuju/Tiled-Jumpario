@@ -203,9 +203,9 @@ MapEditor::MapEditor(QObject *parent)
     mToolsToolBar->addAction(mToolManager->registerTool(pointObjectsTool));
     mToolsToolBar->addAction(mToolManager->registerTool(ellipseObjectsTool));
     mToolsToolBar->addAction(mToolManager->registerTool(polygonObjectsTool));
-    mToolsToolBar->addAction(mToolManager->registerTool(tileObjectsTool));
-    mToolsToolBar->addAction(mToolManager->registerTool(templatesTool));
-    mToolsToolBar->addAction(mToolManager->registerTool(textObjectsTool));
+    // mToolsToolBar->addAction(mToolManager->registerTool(tileObjectsTool));
+    // mToolsToolBar->addAction(mToolManager->registerTool(templatesTool));
+    // mToolsToolBar->addAction(mToolManager->registerTool(textObjectsTool));
     mToolsToolBar->addSeparator();
     mToolsToolBar->addAction(mToolManager->registerTool(new LayerOffsetTool(this)));
     mToolsToolBar->addSeparator();  // todo: hide when there are no tool extensions

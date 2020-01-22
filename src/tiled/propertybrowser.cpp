@@ -592,6 +592,7 @@ void PropertyBrowser::addMapProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Orientation"),
                         groupProperty);
+    orientationProperty->setEnabled(false);
 
     orientationProperty->setAttribute(QLatin1String("enumNames"), mOrientationNames);
 
@@ -599,15 +600,16 @@ void PropertyBrowser::addMapProperties()
     addProperty(HeightProperty, QVariant::Int, tr("Height"), groupProperty)->setEnabled(false);
     addProperty(TileWidthProperty, QVariant::Int, tr("Tile Width"), groupProperty);
     addProperty(TileHeightProperty, QVariant::Int, tr("Tile Height"), groupProperty);
-    addProperty(InfiniteProperty, QVariant::Bool, tr("Infinite"), groupProperty);
+    addProperty(InfiniteProperty, QVariant::Bool, tr("Infinite"), groupProperty)->setEnabled(false);
 
-    addProperty(HexSideLengthProperty, QVariant::Int, tr("Tile Side Length (Hex)"), groupProperty);
+    addProperty(HexSideLengthProperty, QVariant::Int, tr("Tile Side Length (Hex)"), groupProperty)->setEnabled(false);
 
     QtVariantProperty *staggerAxisProperty =
             addProperty(StaggerAxisProperty,
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Stagger Axis"),
                         groupProperty);
+    staggerAxisProperty->setEnabled(false);
 
     staggerAxisProperty->setAttribute(QLatin1String("enumNames"), mStaggerAxisNames);
 
@@ -616,6 +618,7 @@ void PropertyBrowser::addMapProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Stagger Index"),
                         groupProperty);
+    staggerIndexProperty->setEnabled(false);
 
     staggerIndexProperty->setAttribute(QLatin1String("enumNames"), mStaggerIndexNames);
 
@@ -624,11 +627,14 @@ void PropertyBrowser::addMapProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Tile Layer Format"),
                         groupProperty);
+    layerFormatProperty->setEnabled(false);
 
     layerFormatProperty->setAttribute(QLatin1String("enumNames"), mLayerFormatNames);
 
     QtVariantProperty *chunkWidthProperty = addProperty(ChunkWidthProperty, QVariant::Int, tr("Output Chunk Width"), groupProperty);
+    chunkWidthProperty->setEnabled(false);
     QtVariantProperty *chunkHeightProperty = addProperty(ChunkHeightProperty, QVariant::Int, tr("Output Chunk Height"), groupProperty);
+    chunkHeightProperty->setEnabled(false);
 
     chunkWidthProperty->setAttribute(QLatin1String("minimum"), CHUNK_SIZE_MIN);
     chunkHeightProperty->setAttribute(QLatin1String("minimum"), CHUNK_SIZE_MIN);
@@ -638,8 +644,9 @@ void PropertyBrowser::addMapProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Tile Render Order"),
                         groupProperty);
+    renderOrderProperty->setEnabled(false);
 
-    addProperty(CompressionLevelProperty, QVariant::Int, tr("Compression level"), groupProperty);
+    addProperty(CompressionLevelProperty, QVariant::Int, tr("Compression level"), groupProperty)->setEnabled(false);
 
     renderOrderProperty->setAttribute(QLatin1String("enumNames"), mRenderOrderNames);
 
@@ -673,7 +680,7 @@ static int mapObjectFlags(const MapObject *mapObject)
     return flags;
 }
 
-void PropertyBrowser::addMapObjectProperties()
+void PropertyBrowser::addMapObjectProperties(ObjectGroup* objectGroupPtr)
 {
     QtProperty *groupProperty = mGroupManager->addProperty(tr("Object"));
 
@@ -681,9 +688,25 @@ void PropertyBrowser::addMapObjectProperties()
     addProperty(TemplateProperty, filePathTypeId(), tr("Template"), groupProperty)->setEnabled(false);
     addProperty(NameProperty, QVariant::String, tr("Name"), groupProperty);
 
+
+
     QtVariantProperty *typeProperty =
-            addProperty(TypeProperty, QVariant::String, tr("Type"), groupProperty);
-    typeProperty->setAttribute(QLatin1String("suggestions"), objectTypeNames());
+            addProperty(TypeProperty,
+                        QtVariantPropertyManager::enumTypeId(),
+                        tr("Type"),
+                        groupProperty);
+
+    if (objectGroupPtr->isRenderLayer()) {
+        typeProperty->setAttribute(QLatin1String("enumNames"), mTypeNamesRenderLayer);
+    } else {
+        typeProperty->setAttribute(QLatin1String("enumNames"), mTypeNamesObjectLayer);
+    }
+
+
+
+//    QtVariantProperty *typeProperty =
+//            addProperty(TypeProperty, QVariant::String, tr("Type"), groupProperty);
+//    typeProperty->setAttribute(QLatin1String("suggestions"), objectTypeNames());
 
     if (mMapDocument->allowHidingObjects())
         addProperty(VisibleProperty, QVariant::Bool, tr("Visible"), groupProperty);
@@ -733,7 +756,7 @@ void PropertyBrowser::addLayerProperties(QtProperty *parent)
     opacityProperty->setAttribute(QLatin1String("minimum"), 0.0);
     opacityProperty->setAttribute(QLatin1String("maximum"), 1.0);
     opacityProperty->setAttribute(QLatin1String("singleStep"), 0.1);
-    addProperty(TintColorProperty, QVariant::Color, tr("Tint Color"), parent);
+    addProperty(TintColorProperty, QVariant::Color, tr("Tint Color"), parent)->setEnabled(false);
 
     addProperty(OffsetXProperty, QVariant::Double, tr("Horizontal Offset"), parent);
     addProperty(OffsetYProperty, QVariant::Double, tr("Vertical Offset"), parent);
@@ -758,6 +781,7 @@ void PropertyBrowser::addObjectGroupProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Drawing Order"),
                         groupProperty);
+    drawOrderProperty->setEnabled(false);
 
     drawOrderProperty->setAttribute(QLatin1String("enumNames"), mDrawOrderNames);
 
@@ -776,6 +800,7 @@ void PropertyBrowser::addRenderLayerProperties()
                         QtVariantPropertyManager::enumTypeId(),
                         tr("Drawing Order"),
                         groupProperty);
+    drawOrderProperty->setEnabled(false);
 
     drawOrderProperty->setAttribute(QLatin1String("enumNames"), mDrawOrderNames);
 
@@ -1585,7 +1610,10 @@ void PropertyBrowser::addProperties()
     // Add the built-in properties for each object type
     switch (mObject->typeId()) {
     case Object::MapType:               addMapProperties(); break;
-    case Object::MapObjectType:         addMapObjectProperties(); break;
+    case Object::MapObjectType: {
+        addMapObjectProperties(static_cast<MapObject*>(mObject)->objectGroup());
+        break;
+    }
     case Object::LayerType:
         switch (static_cast<Layer*>(mObject)->layerType()) {
         case Layer::TileLayerType:      addTileLayerProperties();   break;
@@ -2031,6 +2059,13 @@ void PropertyBrowser::retranslateUi()
     mDrawOrderNames.clear();
     mDrawOrderNames.append(tr("Top Down"));
     mDrawOrderNames.append(tr("Manual"));
+
+    mTypeNamesObjectLayer.clear();
+    mTypeNamesObjectLayer.append(tr("physics"));
+    mTypeNamesObjectLayer.append(tr("spawn"));
+
+    mTypeNamesRenderLayer.clear();
+    mTypeNamesRenderLayer.append(tr("render"));
 
     removeProperties();
     addProperties();

@@ -42,15 +42,13 @@
 using namespace Tiled;
 
 RenderLayer::RenderLayer(const QString &name)
-    : RenderLayer(name, 0, 0)
-{
+    : RenderLayer(name, 0, 0) {
 }
 
 RenderLayer::RenderLayer(const QString &name, int x, int y)
-    : ObjectGroup(name, true, x, y)
-{
+    : ObjectGroup(name, true, x, y) {
+    setColor(QColor(209, 116, 180));
 }
 
-RenderLayer::~RenderLayer()
-{
+RenderLayer::~RenderLayer() {
 }
