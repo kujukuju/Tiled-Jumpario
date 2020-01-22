@@ -116,6 +116,11 @@ std::unique_ptr<Map> VariantToMapConverter::toMap(const QVariant &variant,
         if (!layer)
             return nullptr;
 
+       if (layer->properties().contains(QLatin1String("render"))) {
+           layer->removeProperty(QLatin1String("render"));
+           layer->setIsRenderLayer(true);
+       }
+
         map->addLayer(std::move(layer));
     }
 
