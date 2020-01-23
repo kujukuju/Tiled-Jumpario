@@ -69,6 +69,7 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <iostream>
 
 namespace Tiled {
 
@@ -441,6 +442,11 @@ static bool objectPropertiesRelevant(Document *document, Object *object)
 
 void PropertyBrowser::propertyAdded(Object *object, const QString &name)
 {
+    std::cout << name.utf16() << std::endl;
+    if (name == QLatin1String("render")) {
+        std::cout << "STRING" << std::endl;
+        return;
+    }
     if (!objectPropertiesRelevant(mDocument, object))
         return;
     if (mNameToProperty.contains(name)) {
@@ -708,6 +714,8 @@ void PropertyBrowser::addMapObjectProperties(ObjectGroup* objectGroupPtr)
 //            addProperty(TypeProperty, QVariant::String, tr("Type"), groupProperty);
 //    typeProperty->setAttribute(QLatin1String("suggestions"), objectTypeNames());
 
+
+
     if (mMapDocument->allowHidingObjects())
         addProperty(VisibleProperty, QVariant::Bool, tr("Visible"), groupProperty);
 
@@ -738,7 +746,7 @@ void PropertyBrowser::addMapObjectProperties(ObjectGroup* objectGroupPtr)
         addProperty(TextAlignmentProperty, VariantPropertyManager::alignmentTypeId(), tr("Alignment"), groupProperty);
         addProperty(FontProperty, QVariant::Font, tr("Font"), groupProperty);
         addProperty(WordWrapProperty, QVariant::Bool, tr("Word Wrap"), groupProperty);
-        addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty);
+        addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty)->setEnabled(false);
     }
 
     addProperty(groupProperty);
@@ -774,7 +782,7 @@ void PropertyBrowser::addObjectGroupProperties()
     QtProperty *groupProperty = mGroupManager->addProperty(tr("Object Layer"));
     addLayerProperties(groupProperty);
 
-    addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty);
+    addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty)->setEnabled(false);;
 
     QtVariantProperty *drawOrderProperty =
             addProperty(DrawOrderProperty,
@@ -793,7 +801,7 @@ void PropertyBrowser::addRenderLayerProperties()
     QtProperty *groupProperty = mGroupManager->addProperty(tr("Render Layer"));
     addLayerProperties(groupProperty);
 
-    addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty);
+    addProperty(ColorProperty, QVariant::Color, tr("Color"), groupProperty)->setEnabled(false);;
 
     QtVariantProperty *drawOrderProperty =
             addProperty(DrawOrderProperty,
@@ -819,7 +827,7 @@ void PropertyBrowser::addImageLayerProperties()
     imageSourceProperty->setAttribute(QLatin1String("filter"),
                                       Utils::readableImageFormatsFilter());
 
-    addProperty(ColorProperty, QVariant::Color, tr("Transparent Color"), groupProperty);
+    addProperty(ColorProperty, QVariant::Color, tr("Transparent Color"), groupProperty)->setEnabled(false);;
 
     addProperty(groupProperty);
 }

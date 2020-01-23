@@ -21,12 +21,14 @@
 
 #pragma once
 
+#include "mapobject.h"
+#include "objectgroup.h"
+
 #include <QCoreApplication>
 #include <QGraphicsItem>
 
 namespace Tiled {
 
-class MapObject;
 class Tile;
 
 class Handle;
@@ -83,7 +85,12 @@ private:
     QTransform tileCollisionObjectsTransform(const Tile &tile) const;
 
     MapDocument *mapDocument() const { return mMapDocument; }
-    QColor color() const { return mColor; }
+    QColor color() const {
+        if (mObject->objectGroup()->isRenderLayer()) {
+            return QColor();
+        }
+        return QColor(255, 255, 255, 255);
+    }
 
     MapObject *mObject;
     MapDocument *mMapDocument;
@@ -91,7 +98,6 @@ private:
     /** Bounding rect cached, for adapting to geometry change correctly. */
     QRectF mBoundingRect;
     QPolygonF mPolygon; // Copy of the polygon, so we know when it changes
-    QColor mColor;      // Cached color of the object
     bool mIsHoveredIndicator = false;
 };
 

@@ -47,15 +47,9 @@ ObjectGroup::ObjectGroup(const QString &name)
 }
 
 ObjectGroup::ObjectGroup(const QString &name, int x, int y)
-    : ObjectGroup(name, false, x, y)
+    : Layer(ObjectGroupType, name, x, y),
+      mDrawOrder(TopDownOrder)
 {
-}
-
-ObjectGroup::ObjectGroup(const QString &name, bool isRenderLayer, int x, int y)
-    : Layer(ObjectGroupType, isRenderLayer, name, x, y)
-    , mDrawOrder(TopDownOrder)
-{
-    setColor(QColor(0, 0, 0));
 }
 
 ObjectGroup::~ObjectGroup()

@@ -46,8 +46,8 @@ RenderLayer::RenderLayer(const QString &name)
 }
 
 RenderLayer::RenderLayer(const QString &name, int x, int y)
-    : ObjectGroup(name, true, x, y) {
-    setColor(QColor(209, 116, 180));
+    : ObjectGroup(name, x, y) {
+    setIsRenderLayer(true);
 }
 
 RenderLayer::~RenderLayer() {

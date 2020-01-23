@@ -56,12 +56,9 @@ MapObjectItem::MapObjectItem(MapObject *object, MapDocument *mapDocument,
 
 void MapObjectItem::syncWithMapObject()
 {
-    const QColor color = mObject->effectiveColor();
-
     // Update the whole object when the name, polygon or color has changed
-    if (mPolygon != mObject->polygon() || mColor != color) {
+    if (mPolygon != mObject->polygon()) {
         mPolygon = mObject->polygon();
-        mColor = color;
         update();
     }
 
@@ -138,7 +135,7 @@ void MapObjectItem::paint(QPainter *painter,
                           QWidget *widget)
 {
     const qreal scale = static_cast<MapView*>(widget->parent())->zoomable()->scale();
-    const QColor color = mIsHoveredIndicator ? mColor.lighter() : mColor;
+    const QColor color = mIsHoveredIndicator ? this->color().lighter() : this->color();
 
     painter->translate(-pos());
     mMapDocument->renderer()->setPainterScale(scale);
