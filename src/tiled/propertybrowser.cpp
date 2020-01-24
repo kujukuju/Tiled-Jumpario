@@ -2067,9 +2067,14 @@ void PropertyBrowser::retranslateUi()
     mDrawOrderNames.append(tr("Top Down"));
     mDrawOrderNames.append(tr("Manual"));
 
+    // JUMPARIO
     mTypeNamesObjectLayer.clear();
     mTypeNamesObjectLayer.append(tr("physics"));
     mTypeNamesObjectLayer.append(tr("spawn"));
+    mTypeNamesObjectLayer.append(tr("goal"));
+    mTypeNamesObjectLayer.append(tr("water"));
+    mTypeNamesObjectLayer.append(tr("safe"));
+    mTypeNamesObjectLayer.append(tr("particlespawn"));
 
     mTypeNamesRenderLayer.clear();
     mTypeNamesRenderLayer.append(tr("render"));

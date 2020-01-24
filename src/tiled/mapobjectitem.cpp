@@ -135,6 +135,7 @@ void MapObjectItem::paint(QPainter *painter,
                           QWidget *widget)
 {
     const qreal scale = static_cast<MapView*>(widget->parent())->zoomable()->scale();
+    // JUMPARIO
     const QColor color = mIsHoveredIndicator ? this->color().lighter() : this->color();
 
     painter->translate(-pos());
