@@ -442,11 +442,6 @@ static bool objectPropertiesRelevant(Document *document, Object *object)
 
 void PropertyBrowser::propertyAdded(Object *object, const QString &name)
 {
-    std::cout << name.utf16() << std::endl;
-    if (name == QLatin1String("render")) {
-        std::cout << "STRING" << std::endl;
-        return;
-    }
     if (!objectPropertiesRelevant(mDocument, object))
         return;
     if (mNameToProperty.contains(name)) {
@@ -1942,6 +1937,10 @@ void PropertyBrowser::updateCustomProperties()
 
     while (it.hasNext()) {
         it.next();
+
+        if (isReservedKey(it.key())) {
+            continue;
+        }
 
         const QVariant displayValue = toDisplayValue(it.value());
 

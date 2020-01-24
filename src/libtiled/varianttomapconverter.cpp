@@ -116,11 +116,6 @@ std::unique_ptr<Map> VariantToMapConverter::toMap(const QVariant &variant,
         if (!layer)
             return nullptr;
 
-       if (layer->properties().contains(QLatin1String("render"))) {
-           layer->removeProperty(QLatin1String("render"));
-           layer->setIsRenderLayer(true);
-       }
-
         map->addLayer(std::move(layer));
     }
 
@@ -326,12 +321,6 @@ SharedTileset VariantToMapConverter::toTileset(const QVariant &variant)
                     tile->setProperties(p);
                     objectGroup->setProperties(Properties());
                 }
-
-//                if (objectGroup->properties().contains(QLatin1String("render"))) {
-//                    std::cout << "READ 2" << std::endl;
-//                    objectGroup->setIsRenderLayer(true);
-//                    objectGroup->removeProperty(QLatin1String("render"));
-//                }
 
                 tile->setObjectGroup(std::move(objectGroup));
             }

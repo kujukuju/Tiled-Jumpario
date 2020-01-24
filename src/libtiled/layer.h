@@ -244,6 +244,7 @@ public:
     bool isImageLayer() const { return mLayerType == ImageLayerType; }
     bool isGroupLayer() const { return mLayerType == GroupLayerType; }
 
+    // JUMPARIO
     bool isRenderLayer() const { return property(QLatin1String("render")).toBool(); }
     void setIsRenderLayer(bool isRenderLayer) { setProperty(QLatin1String("render"), QVariant(isRenderLayer)); }
 

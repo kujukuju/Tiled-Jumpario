@@ -202,6 +202,11 @@ private:
 
     void retranslateUi();
 
+    bool isReservedKey(const QString& key) {
+        // JUMPARIO
+        return key == QLatin1String("render");
+    }
+
     bool mUpdating;
     int mMapObjectFlags;
     Object *mObject;

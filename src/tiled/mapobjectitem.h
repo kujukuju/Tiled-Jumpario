@@ -86,6 +86,7 @@ private:
 
     MapDocument *mapDocument() const { return mMapDocument; }
     QColor color() const {
+        // JUMPARIO
         if (mObject->objectGroup()->isRenderLayer()) {
             return QColor();
         }

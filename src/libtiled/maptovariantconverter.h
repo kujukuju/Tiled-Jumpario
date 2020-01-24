@@ -85,8 +85,7 @@ private:
                             const Layer &layer) const;
 
     void addProperties(QVariantMap &variantMap,
-                       const Properties &properties,
-                       bool isRenderLayer) const;
+                       const Properties &properties) const;
 
     int mVersion;
     QDir mDir;
