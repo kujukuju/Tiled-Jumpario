@@ -691,6 +691,7 @@ void PropertyBrowser::addMapObjectProperties(ObjectGroup* objectGroupPtr)
 
 
 
+    // JUMPARIO
     QtVariantProperty *typeProperty =
             addProperty(TypeProperty,
                         QtVariantPropertyManager::enumTypeId(),
@@ -1091,10 +1092,21 @@ QUndoCommand *PropertyBrowser::applyMapObjectValueTo(PropertyId id, const QVaria
     switch (id) {
     default: {
         MapObject::Property property;
+        QVariant newVal = val;
 
         switch (id) {
         case NameProperty:          property = MapObject::NameProperty; break;
-        case TypeProperty:          property = MapObject::TypeProperty; break;
+        case TypeProperty: {
+            property = MapObject::TypeProperty;
+            if (mapObject->objectGroup()->isRenderLayer()) {
+                newVal = mTypeNamesRenderLayer.at(val.toInt());
+                qDebug(qUtf8Printable(newVal.toString()));
+            } else {
+                newVal = mTypeNamesObjectLayer.at(val.toInt());
+                qDebug(qUtf8Printable(newVal.toString()));
+            }
+            break;
+        }
         case VisibleProperty:       property = MapObject::VisibleProperty; break;
         case TextProperty:          property = MapObject::TextProperty; break;
         case FontProperty:          property = MapObject::TextFontProperty; break;
@@ -1105,7 +1117,7 @@ QUndoCommand *PropertyBrowser::applyMapObjectValueTo(PropertyId id, const QVaria
             return nullptr; // unrecognized property
         }
 
-        command = new ChangeMapObject(mDocument, mapObject, property, val);
+        command = new ChangeMapObject(mDocument, mapObject, property, newVal);
         break;
     }
     case XProperty: {
@@ -1717,8 +1729,13 @@ void PropertyBrowser::updateProperties()
         mIdToProperty[IdProperty]->setValue(mapObject->id());
         mIdToProperty[TemplateProperty]->setValue(QVariant::fromValue(templateFilePath));
         mIdToProperty[NameProperty]->setValue(mapObject->name());
-        mIdToProperty[TypeProperty]->setValue(type);
-        mIdToProperty[TypeProperty]->setValueColor(palette().color(typeColorGroup, QPalette::WindowText));
+        // JUMPARIO
+        if (mapObject->objectGroup()->isRenderLayer()) {
+            mIdToProperty[TypeProperty]->setValue(mTypeNamesRenderLayer.indexOf(mapObject->type()));
+        } else {
+            mIdToProperty[TypeProperty]->setValue(mTypeNamesObjectLayer.indexOf(mapObject->type()));
+        }
+        // mIdToProperty[TypeProperty]->setValueColor(palette().color(typeColorGroup, QPalette::WindowText));
         if (auto visibleProperty = mIdToProperty[VisibleProperty])
             visibleProperty->setValue(mapObject->isVisible());
         mIdToProperty[XProperty]->setValue(mapObject->x());

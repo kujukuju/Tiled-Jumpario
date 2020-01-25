@@ -38,6 +38,7 @@
 
 #include <QFontMetricsF>
 #include <qmath.h>
+#include <iostream>
 
 namespace Tiled {
 
@@ -252,20 +253,43 @@ Alignment MapObject::alignment() const
  */
 QColor MapObject::effectiveColor() const
 {
-    const QString effectiveType = this->effectiveType();
-
-    // See if this object type has a color associated with it
-    for (const ObjectType &type : Object::objectTypes()) {
-        if (type.name.compare(effectiveType, Qt::CaseInsensitive) == 0)
-            return type.color;
+    // JUMPARIO
+    if (objectGroup()->isRenderLayer()) {
+        return QColor(209, 116, 180, 255);
     }
+    if (type() == QLatin1String("physics")) {
+        return QColor(0, 0, 0, 255);
+    }
+    if (type() == QLatin1String("spawn")) {
+        return QColor(109, 175, 202, 255);
+    }
+    if (type() == QLatin1String("goal")) {
+        return QColor(255, 180, 0, 255);
+    }
+    if (type() == QLatin1String("water")) {
+        return QColor(0, 0, 255, 255);
+    }
+    if (type() == QLatin1String("safe")) {
+        return QColor(255, 255, 255, 255);
+    }
+    if (type() == QLatin1String("particlespawn")) {
+        return QColor(71, 212, 27, 255);
+    }
+    return QColor(255, 0, 0, 255);
+//    const QString effectiveType = this->effectiveType();
 
-    // If not, get color from object group
-    if (mObjectGroup && mObjectGroup->color().isValid())
-        return mObjectGroup->color();
+//    // See if this object type has a color associated with it
+//    for (const ObjectType &type : Object::objectTypes()) {
+//        if (type.name.compare(effectiveType, Qt::CaseInsensitive) == 0)
+//            return type.color;
+//    }
 
-    // Fallback color
-    return Qt::gray;
+//    // If not, get color from object group
+//    if (mObjectGroup && mObjectGroup->color().isValid())
+//        return mObjectGroup->color();
+
+//    // Fallback color
+//    return Qt::gray;
 }
 
 QVariant MapObject::mapObjectProperty(Property property) const
@@ -295,7 +319,7 @@ void MapObject::setMapObjectProperty(Property property, const QVariant &value)
 {
     switch (property) {
     case NameProperty:          setName(value.toString()); break;
-    case TypeProperty:          setType(value.toString()); break;
+    case TypeProperty:          setType(value.value<QString>()); break;
     case VisibleProperty:       setVisible(value.toBool()); break;
     case TextProperty:          mTextData.text = value.toString(); break;
     case TextFontProperty:      mTextData.font = value.value<QFont>(); break;

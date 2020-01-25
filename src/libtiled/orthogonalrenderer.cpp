@@ -380,6 +380,8 @@ void OrthogonalRenderer::drawMapObject(QPainter *painter,
                                        const MapObject *object,
                                        const QColor &color) const
 {
+    // const QColor realColor = object->effectiveColor();
+
     painter->save();
 
     const QRectF bounds = object->bounds();

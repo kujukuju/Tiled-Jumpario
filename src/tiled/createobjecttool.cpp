@@ -236,6 +236,13 @@ bool CreateObjectTool::startNewMapObject(const QPointF &pos,
 
     newMapObject->setPosition(pos);
 
+    // JUMPARIO
+    if (objectGroup->isRenderLayer()) {
+        newMapObject->setType(QLatin1String("render"));
+    } else {
+        newMapObject->setType(QLatin1String("physics"));
+    }
+
     mNewMapObjectGroup->addObject(newMapObject);
 
     mNewMapObjectGroup->setColor(objectGroup->color());
