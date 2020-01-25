@@ -2091,7 +2091,11 @@ void PropertyBrowser::retranslateUi()
     mTypeNamesObjectLayer.append(tr("goal"));
     mTypeNamesObjectLayer.append(tr("water"));
     mTypeNamesObjectLayer.append(tr("safe"));
+    mTypeNamesObjectLayer.append(tr("color"));
     mTypeNamesObjectLayer.append(tr("particlespawn"));
+    mTypeNamesObjectLayer.append(tr("xpboundary"));
+    mTypeNamesObjectLayer.append(tr("xpspawn"));
+    mTypeNamesObjectLayer.append(tr("cover"));
 
     mTypeNamesRenderLayer.clear();
     mTypeNamesRenderLayer.append(tr("render"));

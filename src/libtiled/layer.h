@@ -245,7 +245,7 @@ public:
     bool isGroupLayer() const { return mLayerType == GroupLayerType; }
 
     // JUMPARIO
-    bool isRenderLayer() const { return property(QLatin1String("render")).toBool(); }
+    bool isRenderLayer() const { return hasProperty(QLatin1String("render")) && property(QLatin1String("render")).toBool(); }
     void setIsRenderLayer(bool isRenderLayer) { setProperty(QLatin1String("render"), QVariant(isRenderLayer)); }
 
     // These actually return this layer cast to one of its subclasses.

@@ -503,6 +503,12 @@ std::unique_ptr<Layer> VariantToMapConverter::toLayer(const QVariant &variant)
         const QPointF offset(variantMap[QLatin1String("offsetx")].toDouble(),
                              variantMap[QLatin1String("offsety")].toDouble());
         layer->setOffset(offset);
+
+        // JUMPARIO
+        if (layer->isObjectGroup() && layer->isRenderLayer()) {
+            // backwards compat
+            layer->asObjectGroup()->setObjectChildTypes(QLatin1String("render"));
+        }
     }
 
     return layer;
@@ -572,7 +578,6 @@ std::unique_ptr<TileLayer> VariantToMapConverter::toTileLayer(const QVariantMap 
 
 std::unique_ptr<ObjectGroup> VariantToMapConverter::toObjectGroup(const QVariantMap &variantMap)
 {
-    std::cout << "READ 1" << std::endl;
     typedef std::unique_ptr<ObjectGroup> ObjectGroupPtr;
     ObjectGroupPtr objectGroup(new ObjectGroup(variantMap[QLatin1String("name")].toString(),
                                                variantMap[QLatin1String("x")].toInt(),
@@ -599,7 +604,8 @@ std::unique_ptr<ObjectGroup> VariantToMapConverter::toObjectGroup(const QVariant
 std::unique_ptr<MapObject> VariantToMapConverter::toMapObject(const QVariantMap &variantMap)
 {
     const QString name = variantMap[QLatin1String("name")].toString();
-    const QString type = variantMap[QLatin1String("type")].toString();
+    // JUMPARIO
+    const QString type = variantMap[QLatin1String("type")].toString().isEmpty() ? QLatin1String("physics") : variantMap[QLatin1String("type")].toString();
     const int id = variantMap[QLatin1String("id")].toInt();
     const int gid = variantMap[QLatin1String("gid")].toInt();
     const QVariant templateVariant = variantMap[QLatin1String("template")];

@@ -126,6 +126,13 @@ bool ObjectGroup::isEmpty() const
     return mObjects.isEmpty();
 }
 
+// JUMPARIO
+void ObjectGroup::setObjectChildTypes(const QString& type) {
+    for (MapObject *object : mObjects) {
+        object->setType(type);
+    }
+}
+
 QSet<SharedTileset> ObjectGroup::usedTilesets() const
 {
     QSet<SharedTileset> tilesets;

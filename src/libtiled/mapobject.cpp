@@ -254,8 +254,12 @@ Alignment MapObject::alignment() const
 QColor MapObject::effectiveColor() const
 {
     // JUMPARIO
-    if (objectGroup()->isRenderLayer()) {
+    // backwards compat
+    if (type() == QLatin1String("render") || objectGroup()->isRenderLayer()) {
         return QColor(209, 116, 180, 255);
+    }
+    if (type() == QLatin1String("slick")) {
+        return QColor(0, 240, 240, 255);
     }
     if (type() == QLatin1String("physics")) {
         return QColor(0, 0, 0, 255);
@@ -272,8 +276,20 @@ QColor MapObject::effectiveColor() const
     if (type() == QLatin1String("safe")) {
         return QColor(255, 255, 255, 255);
     }
+    if (type() == QLatin1String("color")) {
+        return QColor(216, 0, 255, 255);
+    }
     if (type() == QLatin1String("particlespawn")) {
         return QColor(71, 212, 27, 255);
+    }
+    if (type() == QLatin1String("xpboundary")) {
+        return QColor(101, 170, 150, 255);
+    }
+    if (type() == QLatin1String("xpspawn")) {
+        return QColor(0, 220, 121, 180);
+    }
+    if (type() == QLatin1String("cover")) {
+        return QColor(255, 132, 94, 255);
     }
     return QColor(255, 0, 0, 255);
 //    const QString effectiveType = this->effectiveType();

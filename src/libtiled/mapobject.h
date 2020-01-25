@@ -33,6 +33,7 @@
 #include "object.h"
 #include "tiled.h"
 #include "tilelayer.h"
+#include "objectgroup.h"
 
 #include <QFont>
 #include <QPolygonF>
@@ -44,7 +45,6 @@
 namespace Tiled {
 
 class MapRenderer;
-class ObjectGroup;
 class ObjectTemplate;
 class Tile;
 
@@ -467,8 +467,9 @@ inline ObjectGroup *MapObject::objectGroup() const
  * Sets the object group this object belongs to. Should only be called
  * from the ObjectGroup class.
  */
-inline void MapObject::setObjectGroup(ObjectGroup *objectGroup)
-{ mObjectGroup = objectGroup; }
+inline void MapObject::setObjectGroup(ObjectGroup *objectGroup) {
+    mObjectGroup = objectGroup;
+}
 
 /**
  * Returns the rotation of the object in degrees clockwise.

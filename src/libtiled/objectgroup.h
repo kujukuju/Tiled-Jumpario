@@ -131,6 +131,9 @@ public:
      */
     bool isEmpty() const override;
 
+    // JUMPARIO
+    void setObjectChildTypes(const QString& type);
+
     /**
      * Computes and returns the set of tilesets used by this object group.
      */
