@@ -124,23 +124,6 @@ public:
     };
     Q_ENUM(RenderOrder)
 
-    // JUMPARIO
-    enum TypeNamesObjectLayer {
-        Physics = 0,
-        Spawn = 1,
-        Goal = 2,
-        Water = 3,
-        Safe = 4,
-        ParticleSystem = 5
-    };
-    Q_ENUM(TypeNamesObjectLayer)
-
-    // JUMPARIO
-    enum TypeNamesRenderLayer {
-        Render = 0
-    };
-    Q_ENUM(TypeNamesRenderLayer)
-
     /**
      * Which axis is staggered. Only used by the isometric staggered and
      * hexagonal map renderers.
