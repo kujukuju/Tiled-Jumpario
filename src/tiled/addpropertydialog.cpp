@@ -33,10 +33,13 @@
 using namespace Tiled;
 
 static const char * const TYPE_KEY = "AddPropertyDialog/PropertyType";
+static const char * const NAME_KEY = "AddPropertyDialog/PropertyName";
 
-AddPropertyDialog::AddPropertyDialog(QWidget *parent)
-    : QDialog(parent)
-    , mUi(new Ui::AddPropertyDialog)
+AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
+    : QDialog(parent),
+      // JUMPARIO
+      mType(type),
+      mUi(new Ui::AddPropertyDialog)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -45,30 +48,39 @@ AddPropertyDialog::AddPropertyDialog(QWidget *parent)
     mUi->setupUi(this);
     resize(Utils::dpiScaled(size()));
 
-    QString stringType = typeToName(QVariant::String);
 
-    // Add possible types from QVariant
-    mUi->typeBox->addItem(typeToName(QVariant::Bool),    false);
-    mUi->typeBox->addItem(typeToName(QVariant::Color),   QColor());
-    mUi->typeBox->addItem(typeToName(QVariant::Double),  0.0);
-    mUi->typeBox->addItem(typeToName(filePathTypeId()),  QVariant::fromValue(FilePath()));
-    mUi->typeBox->addItem(typeToName(QVariant::Int),     0);
-    mUi->typeBox->addItem(typeToName(objectRefTypeId()), QVariant::fromValue(ObjectRef()));
-    mUi->typeBox->addItem(stringType,                    QString());
+
+    // JUMPARIO
+    {
+        QString defaultType = QStringLiteral("test");
+        mUi->name->addItem(defaultType, defaultType);
+        mUi->name->addItem(QStringLiteral("test"), QStringLiteral("test"));
+        mUi->name->setCurrentText(defaultType);
+
+        connect(mUi->name, &QComboBox::currentTextChanged,
+                this, &AddPropertyDialog::nameChanged);
+    }
+
+
+
+    {
+        QString stringType = typeToName(QVariant::String);
+
+        // Add possible types from QVariant
+        mUi->typeBox->addItem(typeToName(QVariant::Bool),    false);
+        mUi->typeBox->addItem(typeToName(QVariant::Color),   QColor());
+        mUi->typeBox->addItem(typeToName(QVariant::Double),  0.0);
+        mUi->typeBox->addItem(typeToName(filePathTypeId()),  QVariant::fromValue(FilePath()));
+        mUi->typeBox->addItem(typeToName(QVariant::Int),     0);
+        mUi->typeBox->addItem(typeToName(objectRefTypeId()), QVariant::fromValue(ObjectRef()));
+        mUi->typeBox->addItem(stringType,                    QString());
+        mUi->typeBox->setCurrentText(stringType);
+
+        connect(mUi->typeBox, &QComboBox::currentTextChanged,
+                this, &AddPropertyDialog::typeChanged);
+    }
 
     mUi->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-
-    // Restore previously used type
-    Preferences *prefs = Preferences::instance();
-    QSettings *s = prefs->settings();
-    QString lastType = s->value(QLatin1String(TYPE_KEY), stringType).toString();
-
-    mUi->typeBox->setCurrentText(lastType);
-
-    connect(mUi->name, &QLineEdit::textChanged,
-            this, &AddPropertyDialog::nameChanged);
-    connect(mUi->typeBox, &QComboBox::currentTextChanged,
-            this, &AddPropertyDialog::typeChanged);
 }
 
 AddPropertyDialog::~AddPropertyDialog()
@@ -78,7 +90,7 @@ AddPropertyDialog::~AddPropertyDialog()
 
 QString AddPropertyDialog::propertyName() const
 {
-    return mUi->name->text();
+    return mUi->name->currentData().toString();
 }
 
 QVariant AddPropertyDialog::propertyValue() const
@@ -88,12 +100,8 @@ QVariant AddPropertyDialog::propertyValue() const
 
 void AddPropertyDialog::nameChanged(const QString &text)
 {
-    mUi->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!text.isEmpty());
 }
 
 void AddPropertyDialog::typeChanged(const QString &text)
 {
-    Preferences *prefs = Preferences::instance();
-    QSettings *s = prefs->settings();
-    s->setValue(QLatin1String(TYPE_KEY), text);
 }

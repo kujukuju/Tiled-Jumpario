@@ -18,7 +18,7 @@
     <enum>QLayout::SetMinAndMaxSize</enum>
    </property>
    <item row="0" column="0">
-    <widget class="QLineEdit" name="name">
+    <widget class="QLineEdit" name="name2">
      <property name="readOnly">
       <bool>false</bool>
      </property>
@@ -27,10 +27,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="typeBox"/>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="1" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="locale">
       <locale language="English" country="UnitedStates"/>
@@ -43,10 +40,16 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="2">
+    <widget class="QComboBox" name="typeBox"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="name"/>
+   </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>name</tabstop>
+  <tabstop>name2</tabstop>
  </tabstops>
  <resources/>
  <connections>

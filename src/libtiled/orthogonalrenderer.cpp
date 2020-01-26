@@ -36,6 +36,7 @@
 #include "objectgroup.h"
 
 #include <QtCore/qmath.h>
+#include <iostream>
 
 using namespace Tiled;
 
@@ -235,6 +236,9 @@ void OrthogonalRenderer::drawGrid(QPainter *painter, const QRectF &rect,
 {
     const int tileWidth = map()->tileWidth();
     const int tileHeight = map()->tileHeight();
+    if (1 / painterScale() > tileWidth / 4 || 1 / painterScale() > tileHeight / 4) {
+        return;
+    }
 
     if (tileWidth <= 0 || tileHeight <= 0)
         return;

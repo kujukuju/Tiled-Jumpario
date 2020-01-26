@@ -33,7 +33,7 @@ class AddPropertyDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddPropertyDialog(QWidget *parent = nullptr);
+    explicit AddPropertyDialog(const QString& type, QWidget *parent = nullptr);
     ~AddPropertyDialog();
 
     QString propertyName() const;
@@ -44,4 +44,5 @@ private:
     void typeChanged(const QString &text);
 
     Ui::AddPropertyDialog *mUi;
+    const QString mType;
 };

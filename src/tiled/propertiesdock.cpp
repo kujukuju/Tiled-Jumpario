@@ -255,9 +255,15 @@ void PropertiesDock::pasteProperties()
 
 void PropertiesDock::openAddPropertyDialog()
 {
-    AddPropertyDialog dialog(mPropertyBrowser);
-    if (dialog.exec() == AddPropertyDialog::Accepted)
-        addProperty(dialog.propertyName(), dialog.propertyValue());
+    // JUMPARIO
+    Object* object = mDocument->currentObject();
+    if (object->typeId() == Object::TypeId::MapObjectType) {
+        const QString& type = static_cast<MapObject*>(object)->property(QLatin1String("type")).toString();
+
+        AddPropertyDialog dialog(type, mPropertyBrowser);
+        if (dialog.exec() == AddPropertyDialog::Accepted)
+            addProperty(dialog.propertyName(), dialog.propertyValue());
+    }
 }
 
 void PropertiesDock::addProperty(const QString &name, const QVariant &value)

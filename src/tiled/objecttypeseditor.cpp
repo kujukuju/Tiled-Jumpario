@@ -506,7 +506,8 @@ QtVariantProperty *ObjectTypesEditor::createProperty(int type,
 
 void ObjectTypesEditor::openAddPropertyDialog()
 {
-    AddPropertyDialog dialog(window());
+    // JUMPARIO
+    AddPropertyDialog dialog(QLatin1String(""), window());
     if (dialog.exec() == AddPropertyDialog::Accepted)
         addProperty(dialog.propertyName(), QVariant(dialog.propertyValue()));
 }
