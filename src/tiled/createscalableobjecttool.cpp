@@ -58,7 +58,7 @@ void CreateScalableObjectTool::mouseMovedWhileCreatingObject(const QPointF &pos,
     QRectF objectArea(mStartPos, pixelCoords);
 
     // Holding shift creates circle or square
-    if (modifiers & Qt::ShiftModifier) {
+    if ((modifiers & Qt::ShiftModifier) || mNewMapObjectItem->mapObject()->shape() == MapObject::Ellipse) {
         qreal max = qMax(qAbs(objectArea.width()), qAbs(objectArea.height()));
         objectArea.setWidth(max * sign(objectArea.width()));
         objectArea.setHeight(max * sign(objectArea.height()));

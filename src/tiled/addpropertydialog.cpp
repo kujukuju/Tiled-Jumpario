@@ -80,7 +80,7 @@ AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
                 this, &AddPropertyDialog::typeChanged);
     }
 
-    mUi->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+    mUi->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 }
 
 AddPropertyDialog::~AddPropertyDialog()

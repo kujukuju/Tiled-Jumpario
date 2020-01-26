@@ -336,8 +336,14 @@ inline const QSizeF &MapObject::size() const
 inline void MapObject::setSize(const QSizeF &size)
 { mSize = size; }
 
-inline void MapObject::setSize(qreal width, qreal height)
-{ setSize(QSizeF(width, height)); }
+inline void MapObject::setSize(qreal width, qreal height) {
+    if (mShape == Ellipse) {
+        width = std::min(width, height);
+        height = width;
+    }
+
+    setSize(QSizeF(width, height));
+}
 
 /**
  * Returns the width of this object.
@@ -348,8 +354,13 @@ inline qreal MapObject::width() const
 /**
  * Sets the width of this object.
  */
-inline void MapObject::setWidth(qreal width)
-{ mSize.setWidth(width); }
+inline void MapObject::setWidth(qreal width) {
+    mSize.setWidth(width);
+
+    if (mShape == Ellipse) {
+        mSize.setHeight(width);
+    }
+}
 
 /**
  * Returns the height of this object.
@@ -360,8 +371,13 @@ inline qreal MapObject::height() const
 /**
  * Sets the height of this object.
  */
-inline void MapObject::setHeight(qreal height)
-{ mSize.setHeight(height); }
+inline void MapObject::setHeight(qreal height) {
+    mSize.setHeight(height);
+
+    if (mShape == Ellipse) {
+        mSize.setWidth(height);
+    }
+}
 
 /**
  * Sets the position and size of this object.

@@ -1421,7 +1421,7 @@ void ObjectSelectionTool::updateResizingSingleItem(const QPointF &resizingOrigin
      * are not affected by isometric projection apart from their position.
      */
     const bool pixelSpace = resizeInPixelSpace(mapObject);
-    const bool preserveAspect = modifiers & Qt::ControlModifier;
+    const bool preserveAspect = (modifiers & Qt::ControlModifier) || mapObject->shape() == MapObject::Ellipse;
 
     if (pixelSpace) {
         origin = renderer->screenToPixelCoords(origin);
