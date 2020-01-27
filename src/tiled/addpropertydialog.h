@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QVariant>
+#include <list>
 
 namespace Ui {
 class AddPropertyDialog;
@@ -40,8 +41,15 @@ public:
     QVariant propertyValue() const;
 
 private:
+    struct ItemTypeInfo {
+        const QString typeName;
+        const QVariant typeVariant;
+    };
+
     void nameChanged(const QString &text);
     void typeChanged(const QString &text);
+
+    std::list<ItemTypeInfo> getItemTypeInfoList(const QString& name);
 
     Ui::AddPropertyDialog *mUi;
     const QString mType;

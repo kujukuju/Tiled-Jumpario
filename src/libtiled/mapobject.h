@@ -285,8 +285,12 @@ inline const QString &MapObject::type() const
 /**
  * Sets the type of this object.
  */
-inline void MapObject::setType(const QString &type)
-{ mType = type; }
+inline void MapObject::setType(const QString &type) {
+    mType = type;
+
+    // JUMPARIO
+    clearProperties();
+}
 
 /**
  * Returns the position of this object.

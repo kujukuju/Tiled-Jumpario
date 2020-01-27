@@ -268,7 +268,6 @@ bool JsonTilesetFormat::write(const Tiled::Tileset &tileset,
                               const QString &fileName,
                               Options options)
 {
-    std::cout << "WRITING" << std::endl;
     Tiled::SaveFile file(fileName);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {

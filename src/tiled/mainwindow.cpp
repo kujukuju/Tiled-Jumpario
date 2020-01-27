@@ -1740,7 +1740,7 @@ void MainWindow::updateActions()
     mUi->actionDelete->setEnabled(standardActions & Editor::DeleteAction);
 
     mUi->menuMap->menuAction()->setVisible(mapDocument);
-    mUi->actionAddExternalTileset->setEnabled(mapDocument);
+    mUi->actionAddExternalTileset->setEnabled(false);
     mUi->actionResizeMap->setEnabled(mapDocument);
     mUi->actionOffsetMap->setEnabled(mapDocument);
     mUi->actionMapProperties->setEnabled(mapDocument);

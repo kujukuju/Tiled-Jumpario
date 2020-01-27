@@ -82,6 +82,7 @@ public:
     {
         QPushButton *newTilesetButton = new QPushButton(this);
         newTilesetButton->setText(tr("New Tileset..."));
+        newTilesetButton->setEnabled(false);
 
         QGridLayout *gridLayout = new QGridLayout(this);
         gridLayout->addWidget(newTilesetButton, 0, 0, Qt::AlignCenter);
@@ -208,6 +209,8 @@ TilesetDock::TilesetDock(QWidget *parent)
     , mSynchronizingSelection(false)
 {
     setObjectName(QLatin1String("TilesetDock"));
+
+    mNewTileset->setEnabled(false);
 
     mSelectNextTileset->setShortcut(Qt::Key_BracketRight);
     mSelectPreviousTileset->setShortcut(Qt::Key_BracketLeft);

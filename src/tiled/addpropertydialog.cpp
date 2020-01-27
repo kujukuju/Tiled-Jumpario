@@ -52,10 +52,69 @@ AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
 
     // JUMPARIO
     {
-        QString defaultType = QStringLiteral("test");
-        mUi->name->addItem(defaultType, defaultType);
-        mUi->name->addItem(QStringLiteral("test"), QStringLiteral("test"));
-        mUi->name->setCurrentText(defaultType);
+        mUi->name->clear();
+        qDebug(qUtf8Printable(type));
+        if (type == QLatin1String("physics")) {
+            QString defaultName = QStringLiteral("hue");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("slick")) {
+            QString defaultName = QStringLiteral("hue");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("dynamic")) {
+            QString defaultName = QStringLiteral("delay");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->addItem(QStringLiteral("interval"), QStringLiteral("interval"));
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("spawn")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("goal")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("water")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("spawn")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("safe")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("color")) {
+            QString defaultName = QStringLiteral("hue");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("particlespawn")) {
+            QString defaultName = QStringLiteral("lifetime");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->addItem(QStringLiteral("rate"), QStringLiteral("rate"));
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("xpboundary")) {
+            QString defaultName = QStringLiteral("direction");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("xpspawn")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("cover")) {
+            QString defaultName = QStringLiteral("cover");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("render")) {
+            nameChanged(QStringLiteral(""));
+        } else {
+            nameChanged(QStringLiteral(""));
+        }
 
         connect(mUi->name, &QComboBox::currentTextChanged,
                 this, &AddPropertyDialog::nameChanged);
@@ -63,22 +122,8 @@ AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
 
 
 
-    {
-        QString stringType = typeToName(QVariant::String);
-
-        // Add possible types from QVariant
-        mUi->typeBox->addItem(typeToName(QVariant::Bool),    false);
-        mUi->typeBox->addItem(typeToName(QVariant::Color),   QColor());
-        mUi->typeBox->addItem(typeToName(QVariant::Double),  0.0);
-        mUi->typeBox->addItem(typeToName(filePathTypeId()),  QVariant::fromValue(FilePath()));
-        mUi->typeBox->addItem(typeToName(QVariant::Int),     0);
-        mUi->typeBox->addItem(typeToName(objectRefTypeId()), QVariant::fromValue(ObjectRef()));
-        mUi->typeBox->addItem(stringType,                    QString());
-        mUi->typeBox->setCurrentText(stringType);
-
-        connect(mUi->typeBox, &QComboBox::currentTextChanged,
-                this, &AddPropertyDialog::typeChanged);
-    }
+    connect(mUi->typeBox, &QComboBox::currentTextChanged,
+            this, &AddPropertyDialog::typeChanged);
 
     mUi->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 }
@@ -98,10 +143,41 @@ QVariant AddPropertyDialog::propertyValue() const
     return mUi->typeBox->currentData();
 }
 
-void AddPropertyDialog::nameChanged(const QString &text)
-{
+void AddPropertyDialog::nameChanged(const QString &text) {
+    mUi->typeBox->clear();
+    qDebug(qUtf8Printable(text));
+    if (text == QLatin1String("hue")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else if (text == QLatin1String("delay")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else if (text == QLatin1String("interval")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else if (text == QLatin1String("lifetime")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else if (text == QLatin1String("rate")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
+    } else if (text == QLatin1String("direction")) {
+        mUi->typeBox->addItem(typeToName(QVariant::String), QString());
+        mUi->typeBox->setCurrentText(typeToName(QVariant::String));
+    } else if (text == QLatin1String("cover")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else {
+        mUi->typeBox->setCurrentText(QStringLiteral(""));
+    }
 }
 
-void AddPropertyDialog::typeChanged(const QString &text)
-{
+void AddPropertyDialog::typeChanged(const QString &text) {
+
+}
+
+std::list<AddPropertyDialog::ItemTypeInfo> AddPropertyDialog::getItemTypeInfoList(const QString& name) {
+    std::list<ItemTypeInfo> infoList;
+
+    infoList.push_back({typeToName(QVariant::String), QString()});
 }

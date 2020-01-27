@@ -334,6 +334,7 @@ void TerrainDock::retranslateUi()
 {
     setWindowTitle(tr("Terrains"));
     mEraseTerrainButton->setText(tr("Erase Terrain"));
+    mEraseTerrainButton->setEnabled(false);
 
     mAddTerrainType->setText(tr("Add Terrain Type"));
     mRemoveTerrainType->setText(tr("Remove Terrain Type"));

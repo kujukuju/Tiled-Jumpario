@@ -306,6 +306,8 @@ MapEditor::MapEditor(QObject *parent)
             this, &MapEditor::showTileCollisionShapesChanged);
     connect(prefs, &Preferences::aboutToSaveSession,
             this, [this] { if (mCurrentMapDocument) saveDocumentState(mCurrentMapDocument); });
+
+    mTilesetDock->close();
 }
 
 MapEditor::~MapEditor()
@@ -407,9 +409,9 @@ void MapEditor::setCurrentDocument(Document *document)
     mPropertiesDock->setDocument(mapDocument);
     mUndoDock->setStack(document ? document->undoStack() : nullptr);
     mObjectsDock->setMapDocument(mapDocument);
-    mTilesetDock->setMapDocument(mapDocument);
-    mTerrainDock->setDocument(mapDocument);
-    mWangDock->setDocument(mapDocument);
+    // mTilesetDock->setMapDocument(mapDocument);
+    // mTerrainDock->setDocument(mapDocument);
+    // mWangDock->setDocument(mapDocument);
     mMiniMapDock->setMapDocument(mapDocument);
 
     if (mapDocument) {
@@ -488,9 +490,9 @@ QList<QDockWidget *> MapEditor::dockWidgets() const
         mUndoDock,
         mObjectsDock,
         mTemplatesDock,
-        mTilesetDock,
-        mTerrainDock,
-        mWangDock,
+        // mTilesetDock,
+        // mTerrainDock,
+        // mWangDock,
         mMiniMapDock,
         mTileStampsDock
     };
@@ -589,11 +591,11 @@ void MapEditor::resetLayout()
     mMainWindow->tabifyDockWidget(mMiniMapDock, mObjectsDock);
     mMainWindow->tabifyDockWidget(mObjectsDock, mLayerDock);
 
-    mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mTerrainDock);
-    mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mWangDock);
-    mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mTilesetDock);
-    mMainWindow->tabifyDockWidget(mTerrainDock, mWangDock);
-    mMainWindow->tabifyDockWidget(mWangDock, mTilesetDock);
+    // mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mTerrainDock);
+    // mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mWangDock);
+    // mMainWindow->addDockWidget(Qt::RightDockWidgetArea, mTilesetDock);
+    // mMainWindow->tabifyDockWidget(mTerrainDock, mWangDock);
+    // mMainWindow->tabifyDockWidget(mWangDock, mTilesetDock);
 
     // These dock widgets may not be immediately useful to many people, so
     // they are hidden by default.

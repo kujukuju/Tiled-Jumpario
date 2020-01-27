@@ -264,6 +264,9 @@ QColor MapObject::effectiveColor() const
     if (type() == QLatin1String("physics")) {
         return QColor(0, 0, 0, 255);
     }
+    if (type() == QLatin1String("dynamic")) {
+        return QColor(0, 40, 90, 255);
+    }
     if (type() == QLatin1String("spawn")) {
         return QColor(109, 175, 202, 255);
     }
@@ -271,7 +274,7 @@ QColor MapObject::effectiveColor() const
         return QColor(255, 180, 0, 255);
     }
     if (type() == QLatin1String("water")) {
-        return QColor(0, 0, 255, 255);
+        return QColor(40, 40, 255, 255);
     }
     if (type() == QLatin1String("safe")) {
         return QColor(255, 255, 255, 255);

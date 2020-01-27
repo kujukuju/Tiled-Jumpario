@@ -17,5 +17,6 @@ win* {
 
 TEMPLATE  = subdirs
 CONFIG   += ordered
+CONFIG   += static
 
 SUBDIRS = src translations

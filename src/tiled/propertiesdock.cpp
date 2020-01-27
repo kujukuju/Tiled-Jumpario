@@ -258,11 +258,21 @@ void PropertiesDock::openAddPropertyDialog()
     // JUMPARIO
     Object* object = mDocument->currentObject();
     if (object->typeId() == Object::TypeId::MapObjectType) {
-        const QString& type = static_cast<MapObject*>(object)->property(QLatin1String("type")).toString();
+        const QString& type = static_cast<MapObject*>(object)->type();
 
         AddPropertyDialog dialog(type, mPropertyBrowser);
-        if (dialog.exec() == AddPropertyDialog::Accepted)
-            addProperty(dialog.propertyName(), dialog.propertyValue());
+        if (dialog.exec() == AddPropertyDialog::Accepted) {
+            int index = 1;
+            QString key = dialog.propertyName();
+
+            if (key.startsWith(QLatin1String("cover"))) {
+                do {
+                    key = dialog.propertyName().append(QLatin1String(std::to_string(index++).c_str()));
+                } while (static_cast<MapObject*>(object)->hasProperty(key));
+            }
+
+            addProperty(key, dialog.propertyValue());
+        }
     }
 }
 

@@ -85,31 +85,6 @@ private:
     QTransform tileCollisionObjectsTransform(const Tile &tile) const;
 
     MapDocument *mapDocument() const { return mMapDocument; }
-//    QColor color() const {
-//        // JUMPARIO
-//        if (mObject->objectGroup()->isRenderLayer()) {
-//            return QColor(209, 116, 180, 255);
-//        }
-//        if (mObject->type() == QLatin1String("physics")) {
-//            return QColor(0, 0, 0, 255);
-//        }
-//        if (mObject->type() == QLatin1String("spawn")) {
-//            return QColor(109, 175, 202, 255);
-//        }
-//        if (mObject->type() == QLatin1String("goal")) {
-//            return QColor(255, 180, 0, 255);
-//        }
-//        if (mObject->type() == QLatin1String("water")) {
-//            return QColor(0, 0, 255, 255);
-//        }
-//        if (mObject->type() == QLatin1String("safe")) {
-//            return QColor(255, 255, 255, 255);
-//        }
-//        if (mObject->type() == QLatin1String("particlespawn")) {
-//            return QColor(71, 212, 27, 255);
-//        }
-//        return QColor(255, 0, 0, 255);
-//    }
 
     MapObject *mObject;
     MapDocument *mMapDocument;

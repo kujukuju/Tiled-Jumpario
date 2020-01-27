@@ -471,7 +471,7 @@ void MapDocument::rotateSelectedObjects(RotateDirection direction)
  * the new layer, emits editLayerNameRequested().
  */
 Layer *MapDocument::addLayer(Layer::TypeFlag layerType) {
-    addLayer(layerType, false);
+    return addLayer(layerType, false);
 }
 
 Layer *MapDocument::addLayer(Layer::TypeFlag layerType, bool isRenderLayer)

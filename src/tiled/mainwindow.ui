@@ -175,6 +175,9 @@
     <addaction name="actionClearView"/>
    </widget>
    <widget class="QMenu" name="menuTileset">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Tileset</string>
     </property>

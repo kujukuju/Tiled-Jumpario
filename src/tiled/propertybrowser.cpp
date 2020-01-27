@@ -2087,6 +2087,8 @@ void PropertyBrowser::retranslateUi()
     // JUMPARIO
     mTypeNamesObjectLayer.clear();
     mTypeNamesObjectLayer.append(tr("physics"));
+    mTypeNamesObjectLayer.append(tr("slick"));
+    mTypeNamesObjectLayer.append(tr("dynamic"));
     mTypeNamesObjectLayer.append(tr("spawn"));
     mTypeNamesObjectLayer.append(tr("goal"));
     mTypeNamesObjectLayer.append(tr("water"));
