@@ -1751,7 +1751,7 @@ void PropertyBrowser::updateProperties()
         } else {
             mIdToProperty[TypeProperty]->setValue(mTypeNamesObjectLayer.indexOf(mapObject->type()));
         }
-        mIdToProperty[StyleProperty]->setValue(mStyleNames.indexOf(mapObject->style()));
+        // mIdToProperty[StyleProperty]->setValue(mStyleNames.indexOf(mapObject->style()));
         // mIdToProperty[TypeProperty]->setValueColor(palette().color(typeColorGroup, QPalette::WindowText));
         if (auto visibleProperty = mIdToProperty[VisibleProperty])
             visibleProperty->setValue(mapObject->isVisible());
