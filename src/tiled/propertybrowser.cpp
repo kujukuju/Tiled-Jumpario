@@ -2127,6 +2127,8 @@ void PropertyBrowser::retranslateUi()
     mStyleNames.append(tr("grass"));
     mStyleNames.append(tr("grasstop"));
     mStyleNames.append(tr("dirt"));
+    mStyleNames.append(tr("dirtdots"));
+    mStyleNames.append(tr("soliddirt"));
     mStyleNames.append(tr("groundedrock"));
     mStyleNames.append(tr("stone"));
     mStyleNames.append(tr("smoothstone"));
