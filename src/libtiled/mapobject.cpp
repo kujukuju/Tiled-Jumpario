@@ -294,6 +294,18 @@ QColor MapObject::effectiveColor() const
     if (type() == QLatin1String("cover")) {
         return QColor(255, 132, 94, 255);
     }
+    if (type() == QLatin1String("anchor")) {
+        return QColor(60, 30, 0, 255);
+    }
+    if (type() == QLatin1String("rope")) {
+        return QColor(190, 100, 30, 255);
+    }
+    if (type() == QLatin1String("collidablerope")) {
+        return QColor(130, 90, 60, 255);
+    }
+    if (type() == QLatin1String("joint")) {
+        return QColor(150, 100, 140, 255);
+    }
     return QColor(255, 0, 0, 255);
 //    const QString effectiveType = this->effectiveType();
 
@@ -316,6 +328,7 @@ QVariant MapObject::mapObjectProperty(Property property) const
     switch (property) {
     case NameProperty:          return mName;
     case TypeProperty:          return mType;
+    case StyleProperty:         return mStyle;
     case VisibleProperty:       return mVisible;
     case TextProperty:          return mTextData.text;
     case TextFontProperty:      return mTextData.font;
@@ -339,6 +352,7 @@ void MapObject::setMapObjectProperty(Property property, const QVariant &value)
     switch (property) {
     case NameProperty:          setName(value.toString()); break;
     case TypeProperty:          setType(value.value<QString>()); break;
+    case StyleProperty:         setStyle(value.value<QString>()); break;
     case VisibleProperty:       setVisible(value.toBool()); break;
     case TextProperty:          mTextData.text = value.toString(); break;
     case TextFontProperty:      mTextData.font = value.value<QFont>(); break;
@@ -394,6 +408,7 @@ void MapObject::flip(FlipDirection direction, const QPointF &origin)
 MapObject *MapObject::clone() const
 {
     MapObject *o = new MapObject(mName, mType, mPos, mSize);
+    o->setStyle(mStyle.isEmpty() ? QLatin1String("grass") : mStyle);
     o->setId(mId);
     o->setProperties(properties());
     o->setTextData(mTextData);
@@ -412,6 +427,7 @@ void MapObject::copyPropertiesFrom(const MapObject *object)
     setName(object->name());
     setSize(object->size());
     setType(object->type());
+    setStyle(object->style());
     setTextData(object->textData());
     setPolygon(object->polygon());
     setShape(object->shape());
@@ -444,6 +460,9 @@ void MapObject::syncWithTemplate()
 
     if (!propertyChanged(MapObject::TypeProperty))
         setType(base->type());
+
+    if (!propertyChanged(MapObject::StyleProperty))
+        setStyle(base->style());
 
     if (!propertyChanged(MapObject::TextProperty))
         setTextData(base->textData());

@@ -108,6 +108,7 @@ public:
     Shape shape() const;
     QString name() const;
     QString type() const;
+    QString style() const;
     qreal x() const;
     qreal y() const;
     QPointF pos() const;
@@ -140,6 +141,7 @@ public slots:
     void setShape(Shape shape);
     void setName(QString name);
     void setType(QString type);
+    void setStyle(QString style);
     void setX(qreal x);
     void setY(qreal y);
     void setPos(QPointF pos);
@@ -184,6 +186,11 @@ inline QString EditableMapObject::name() const
 inline QString EditableMapObject::type() const
 {
     return mapObject()->type();
+}
+
+inline QString EditableMapObject::style() const
+{
+    return mapObject()->style();
 }
 
 inline qreal EditableMapObject::x() const

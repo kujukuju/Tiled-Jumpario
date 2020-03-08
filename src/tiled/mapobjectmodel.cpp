@@ -158,6 +158,8 @@ QVariant MapObjectModel::data(const QModelIndex &index, int role) const
                 return mapObject->name();
             case Type:
                 return mapObject->effectiveType();
+            case Style:
+                return mapObject->style();
             case Id:
                 return mapObject->id();
             case Position:
@@ -554,6 +556,8 @@ void MapObjectModel::documentChanged(const ChangeEvent &change)
             columns.append(MapObjectModel::Name);
         if (mapObjectChange.properties & MapObject::TypeProperty)
             columns.append(MapObjectModel::Type);
+        if (mapObjectChange.properties & MapObject::StyleProperty)
+            columns.append(MapObjectModel::Style);
         if (mapObjectChange.properties & MapObject::PositionProperty)
             columns.append(MapObjectModel::Position);
 

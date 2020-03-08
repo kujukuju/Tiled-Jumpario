@@ -242,6 +242,7 @@ bool CreateObjectTool::startNewMapObject(const QPointF &pos,
     } else {
         newMapObject->setType(QLatin1String("physics"));
     }
+    newMapObject->setStyle(QLatin1String("grass"));
 
     mNewMapObjectGroup->addObject(newMapObject);
 

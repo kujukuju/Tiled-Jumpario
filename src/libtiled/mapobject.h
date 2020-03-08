@@ -100,19 +100,20 @@ public:
     enum Property {
         NameProperty            = 1 << 0,
         TypeProperty            = 1 << 1,
-        VisibleProperty         = 1 << 2,
-        TextProperty            = 1 << 3,
-        TextFontProperty        = 1 << 4,
-        TextAlignmentProperty   = 1 << 5,
-        TextWordWrapProperty    = 1 << 6,
-        TextColorProperty       = 1 << 7,
-        PositionProperty        = 1 << 8,
-        SizeProperty            = 1 << 9,
-        RotationProperty        = 1 << 10,
-        CellProperty            = 1 << 11,
-        ShapeProperty           = 1 << 12,
-        TemplateProperty        = 1 << 13,
-        CustomProperties        = 1 << 14,
+        StyleProperty           = 1 << 2,
+        VisibleProperty         = 1 << 3,
+        TextProperty            = 1 << 4,
+        TextFontProperty        = 1 << 5,
+        TextAlignmentProperty   = 1 << 6,
+        TextWordWrapProperty    = 1 << 7,
+        TextColorProperty       = 1 << 8,
+        PositionProperty        = 1 << 9,
+        SizeProperty            = 1 << 10,
+        RotationProperty        = 1 << 11,
+        CellProperty            = 1 << 12,
+        ShapeProperty           = 1 << 13,
+        TemplateProperty        = 1 << 14,
+        CustomProperties        = 1 << 15,
         AllProperties           = 0xFF
     };
 
@@ -134,6 +135,9 @@ public:
 
     const QString &type() const;
     void setType(const QString &type);
+
+    const QString &style() const;
+    void setStyle(const QString &style);
 
     const QString &effectiveType() const;
 
@@ -229,6 +233,7 @@ private:
     Shape mShape;
     QString mName;
     QString mType;
+    QString mStyle;
     QPointF mPos;
     QSizeF mSize;
     TextData mTextData;
@@ -290,6 +295,16 @@ inline void MapObject::setType(const QString &type) {
 
     // JUMPARIO
     clearProperties();
+}
+
+// JUMPARIO
+inline const QString &MapObject::style() const
+{ return mStyle; }
+
+
+// JUMPARIO
+inline void MapObject::setStyle(const QString &style) {
+    mStyle = style;
 }
 
 /**

@@ -70,6 +70,8 @@ AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
             QString defaultName = QStringLiteral("delay");
             mUi->name->addItem(defaultName, defaultName);
             mUi->name->addItem(QStringLiteral("interval"), QStringLiteral("interval"));
+            mUi->name->addItem(QStringLiteral("density"), QStringLiteral("density"));
+            mUi->name->addItem(QStringLiteral("friction"), QStringLiteral("friction"));
             mUi->name->setCurrentText(defaultName);
 
             nameChanged(defaultName);
@@ -112,6 +114,32 @@ AddPropertyDialog::AddPropertyDialog(const QString& type, QWidget *parent)
             nameChanged(defaultName);
         } else if (type == QLatin1String("render")) {
             nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("anchor")) {
+            nameChanged(QStringLiteral(""));
+        } else if (type == QLatin1String("rope")) {
+            QString defaultName = QStringLiteral("segmentlength");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->addItem(QStringLiteral("segmentwidth"), QStringLiteral("segmentwidth"));
+            mUi->name->addItem(QStringLiteral("delay"), QStringLiteral("delay"));
+            mUi->name->addItem(QStringLiteral("interval"), QStringLiteral("interval"));
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("collidablerope")) {
+            QString defaultName = QStringLiteral("delay");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->addItem(QStringLiteral("interval"), QStringLiteral("interval"));
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
+        } else if (type == QLatin1String("joint")) {
+            QString defaultName = QStringLiteral("torque");
+            mUi->name->addItem(defaultName, defaultName);
+            mUi->name->addItem(QStringLiteral("delay"), QStringLiteral("delay"));
+            mUi->name->addItem(QStringLiteral("interval"), QStringLiteral("interval"));
+            mUi->name->setCurrentText(defaultName);
+
+            nameChanged(defaultName);
         } else {
             nameChanged(QStringLiteral(""));
         }
@@ -167,6 +195,21 @@ void AddPropertyDialog::nameChanged(const QString &text) {
     } else if (text == QLatin1String("cover")) {
         mUi->typeBox->addItem(typeToName(QVariant::Int), 0);
         mUi->typeBox->setCurrentText(typeToName(QVariant::Int));
+    } else if (text == QLatin1String("segmentlength")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
+    } else if (text == QLatin1String("segmentwidth")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
+    } else if (text == QLatin1String("torque")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
+    } else if (text == QLatin1String("density")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
+    } else if (text == QLatin1String("friction")) {
+        mUi->typeBox->addItem(typeToName(QVariant::Double), 0.0);
+        mUi->typeBox->setCurrentText(typeToName(QVariant::Double));
     } else {
         mUi->typeBox->setCurrentText(QStringLiteral(""));
     }

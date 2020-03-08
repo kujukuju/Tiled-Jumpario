@@ -1091,12 +1091,14 @@ std::unique_ptr<MapObject> MapReaderPrivate::readObject()
     const qreal width = atts.value(QLatin1String("width")).toDouble();
     const qreal height = atts.value(QLatin1String("height")).toDouble();
     const QString type = atts.value(QLatin1String("type")).toString();
+    const QString style = atts.value(QLatin1String("style")).toString();
     const QStringRef visibleRef = atts.value(QLatin1String("visible"));
 
     const QPointF pos(x, y);
     const QSizeF size(width, height);
 
     auto object = std::make_unique<MapObject>(name, type, pos, size);
+    object->setStyle(style);
 
     if (!templateFileName.isEmpty()) { // This object is a template instance
         const QString absoluteFileName = p->resolveReference(templateFileName, mPath);
@@ -1108,6 +1110,7 @@ std::unique_ptr<MapObject> MapReaderPrivate::readObject()
 
     object->setPropertyChanged(MapObject::NameProperty, !name.isEmpty());
     object->setPropertyChanged(MapObject::TypeProperty, !type.isEmpty());
+    object->setPropertyChanged(MapObject::StyleProperty, !type.isEmpty());
     object->setPropertyChanged(MapObject::SizeProperty, !size.isEmpty());
 
     bool ok;

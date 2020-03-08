@@ -133,10 +133,7 @@ NewMapDialog::NewMapDialog(QWidget *parent) :
     connect(mUi->orientation, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &NewMapDialog::refreshPixelSize);
     connect(mUi->fixedSize, &QAbstractButton::toggled, this, &NewMapDialog::updateWidgets);
 
-    if (fixedSize)
-        mUi->fixedSize->setChecked(true);
-    else
-        mUi->mapInfinite->setChecked(true);
+    mUi->mapInfinite->setChecked(true);
 
     refreshPixelSize();
 }
@@ -151,7 +148,7 @@ MapDocumentPtr NewMapDialog::createMap()
     if (exec() != QDialog::Accepted)
         return MapDocumentPtr();
 
-    const bool fixedSize = mUi->fixedSize->isChecked();
+    const bool fixedSize = false; // mUi->fixedSize->isChecked();
     const int mapWidth = mUi->mapWidth->value();
     const int mapHeight = mUi->mapHeight->value();
     const int tileWidth = mUi->tileWidth->value();

@@ -304,7 +304,7 @@ void PropertyBrowser::objectsChanged(const MapObjectsChangeEvent &mapObjectsChan
 
     updateProperties();
 
-    if (mapObjectsChange.properties & (MapObject::CustomProperties | MapObject::TypeProperty))
+    if (mapObjectsChange.properties & (MapObject::CustomProperties | MapObject::TypeProperty | MapObject::StyleProperty))
         updateCustomProperties();
 }
 
@@ -702,6 +702,17 @@ void PropertyBrowser::addMapObjectProperties(ObjectGroup* objectGroupPtr)
         typeProperty->setAttribute(QLatin1String("enumNames"), mTypeNamesRenderLayer);
     } else {
         typeProperty->setAttribute(QLatin1String("enumNames"), mTypeNamesObjectLayer);
+    }
+
+
+    if (!objectGroupPtr->isRenderLayer()) {
+        QtVariantProperty *styleProperty =
+                addProperty(StyleProperty,
+                            QtVariantPropertyManager::enumTypeId(),
+                            tr("Style"),
+                            groupProperty);
+
+        styleProperty->setAttribute(QLatin1String("enumNames"), mStyleNames);
     }
 
 
@@ -1105,6 +1116,11 @@ QUndoCommand *PropertyBrowser::applyMapObjectValueTo(PropertyId id, const QVaria
                 newVal = mTypeNamesObjectLayer.at(val.toInt());
                 qDebug(qUtf8Printable(newVal.toString()));
             }
+            break;
+        }
+        case StyleProperty: {
+            property = MapObject::StyleProperty;
+            newVal = mStyleNames.at(val.toInt());
             break;
         }
         case VisibleProperty:       property = MapObject::VisibleProperty; break;
@@ -1735,6 +1751,7 @@ void PropertyBrowser::updateProperties()
         } else {
             mIdToProperty[TypeProperty]->setValue(mTypeNamesObjectLayer.indexOf(mapObject->type()));
         }
+        mIdToProperty[StyleProperty]->setValue(mStyleNames.indexOf(mapObject->style()));
         // mIdToProperty[TypeProperty]->setValueColor(palette().color(typeColorGroup, QPalette::WindowText));
         if (auto visibleProperty = mIdToProperty[VisibleProperty])
             visibleProperty->setValue(mapObject->isVisible());
@@ -2094,6 +2111,10 @@ void PropertyBrowser::retranslateUi()
     mTypeNamesObjectLayer.append(tr("water"));
     mTypeNamesObjectLayer.append(tr("safe"));
     mTypeNamesObjectLayer.append(tr("color"));
+    mTypeNamesObjectLayer.append(tr("anchor"));
+    mTypeNamesObjectLayer.append(tr("rope"));
+    mTypeNamesObjectLayer.append(tr("collidablerope"));
+    mTypeNamesObjectLayer.append(tr("joint"));
     mTypeNamesObjectLayer.append(tr("particlespawn"));
     mTypeNamesObjectLayer.append(tr("xpboundary"));
     mTypeNamesObjectLayer.append(tr("xpspawn"));
@@ -2101,6 +2122,14 @@ void PropertyBrowser::retranslateUi()
 
     mTypeNamesRenderLayer.clear();
     mTypeNamesRenderLayer.append(tr("render"));
+
+    mStyleNames.clear();
+    mStyleNames.append(tr("grass"));
+    mStyleNames.append(tr("dirt"));
+    mStyleNames.append(tr("groundedrock"));
+    mStyleNames.append(tr("stone"));
+    mStyleNames.append(tr("wood"));
+    mStyleNames.append(tr("bush"));
 
     removeProperties();
     addProperties();

@@ -606,6 +606,7 @@ std::unique_ptr<MapObject> VariantToMapConverter::toMapObject(const QVariantMap 
     const QString name = variantMap[QLatin1String("name")].toString();
     // JUMPARIO
     const QString type = variantMap[QLatin1String("type")].toString().isEmpty() ? QLatin1String("physics") : variantMap[QLatin1String("type")].toString();
+    const QString style = variantMap[QLatin1String("style")].toString().isEmpty() ? QLatin1String("grass") : variantMap[QLatin1String("style")].toString();
     const int id = variantMap[QLatin1String("id")].toInt();
     const int gid = variantMap[QLatin1String("gid")].toInt();
     const QVariant templateVariant = variantMap[QLatin1String("template")];
@@ -620,6 +621,7 @@ std::unique_ptr<MapObject> VariantToMapConverter::toMapObject(const QVariantMap 
 
     auto object = std::make_unique<MapObject>(name, type, pos, size);
     object->setId(id);
+    object->setStyle(style);
 
     if (variantMap.contains(QLatin1String("rotation"))) {
         object->setRotation(rotation);
@@ -636,6 +638,7 @@ std::unique_ptr<MapObject> VariantToMapConverter::toMapObject(const QVariantMap 
 
     object->setPropertyChanged(MapObject::NameProperty, !name.isEmpty());
     object->setPropertyChanged(MapObject::TypeProperty, !type.isEmpty());
+    object->setPropertyChanged(MapObject::StyleProperty, !style.isEmpty());
     object->setPropertyChanged(MapObject::SizeProperty, !size.isEmpty());
 
     if (gid) {

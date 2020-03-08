@@ -99,6 +99,7 @@ private:
     enum PropertyId {
         NameProperty,
         TypeProperty,
+        StyleProperty,
         XProperty,
         YProperty,
         WidthProperty,
@@ -235,6 +236,7 @@ private:
     QStringList mDrawOrderNames;
     QStringList mTypeNamesObjectLayer;
     QStringList mTypeNamesRenderLayer;
+    QStringList mStyleNames;
 };
 
 /**

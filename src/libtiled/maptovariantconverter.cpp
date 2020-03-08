@@ -527,6 +527,7 @@ QVariant MapToVariantConverter::toVariant(const MapObject &object) const
     QVariantMap objectVariant;
     const QString &name = object.name();
     const QString &type = object.type();
+    const QString &style = object.style();
 
     addProperties(objectVariant, object.properties());
 
@@ -546,6 +547,9 @@ QVariant MapToVariantConverter::toVariant(const MapObject &object) const
 
     if (notTemplateInstance || object.propertyChanged(MapObject::TypeProperty))
         objectVariant[QLatin1String("type")] = type;
+
+    if (notTemplateInstance || object.propertyChanged(MapObject::StyleProperty))
+        objectVariant[QLatin1String("style")] = style;
 
 
     if (notTemplateInstance || object.propertyChanged(MapObject::CellProperty))

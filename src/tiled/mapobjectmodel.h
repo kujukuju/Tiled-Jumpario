@@ -73,6 +73,7 @@ public:
     enum Column {
         Name,
         Type,
+        Style,
         Id,
         Position,
         LastColumn = Position,
